@@ -36,6 +36,35 @@ You need Node.js 20.12 or later and a Corti account. Sign up at [console.corti.a
 
 You get the SOAP note in your terminal, plus `note.md`, `note.json` and `transcript.txt` in `output/<timestamp>/`.
 
+## Your own recording and templates
+
+`npm start` on its own uses the sample visit and the "SOAP (comprehensive)" template. Put your choices after `--`, which tells npm to pass them to the starter.
+
+**Your own recording.** The easiest place for it is the `samples` folder:
+
+```bash
+npm start -- samples/myvisit.m4a
+```
+
+- Or type `npm start -- `, then drag the file from your file manager into the terminal to paste its full path.
+- Wrap paths that contain spaces in quotes: `npm start -- "C:\My Files\visit one.m4a"`.
+- Phone voice memos (m4a) work, as do mp3, wav, webm, ogg and flac.
+
+**Another template.** List the templates for a language, then pass one by name, in quotes:
+
+```bash
+npm start -- --list-templates --lang en
+npm start -- --template "Referral Letter"
+```
+
+English options include SOAP (concise), GP note, History and Physical, Referral Letter, Discharge Note, Cardiology Report and Psychology Session Note. The list comes from Corti, so check `--list-templates` for the current names. Running the sample as a referral letter is a quick way to see what a template changes.
+
+**Both at once,** plus facts and codes:
+
+```bash
+npm start -- samples/myvisit.m4a --template "GP note" --facts --codes
+```
+
 ## Options
 
 | Command | What it does |
