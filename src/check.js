@@ -4,6 +4,7 @@ import { checkAuth, createClient, explain, readConfig } from "./corti.js";
 import { DEFAULT_TEMPLATE_NAME, findTemplate } from "./templates.js";
 
 const ok = (text) => console.log(`  [ok] ${text}`);
+const warn = (text) => console.log(`  [!]  ${text}`);
 const fail = (text) => {
   console.log(`  [x]  ${text}`);
   process.exitCode = 1;
@@ -30,8 +31,12 @@ try {
 }
 
 try {
-  const template = await findTemplate(createClient(config), DEFAULT_TEMPLATE_NAME);
-  ok(`Template "${template.name}" is available (${template.id})`);
+  const template = await findTemplate(createClient(config), DEFAULT_TEMPLATE_NAME, "en");
+  if (template.fallback) {
+    warn(`Couldn't list templates; "npm start" will try the default "${template.name}" ID (${template.id})`);
+  } else {
+    ok(`Template "${template.name}" is available (${template.id})`);
+  }
 } catch (error) {
   fail(explain(error, config, "templates"));
   process.exit();

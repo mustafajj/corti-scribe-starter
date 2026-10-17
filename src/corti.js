@@ -2,6 +2,17 @@
 // builds the SDK client, and turns common API errors into plain-language fixes.
 import { CortiAuth, CortiClient, CortiEnvironment, CortiError } from "@corti/sdk";
 
+// Load .env if there is one. process.loadEnvFile needs Node.js 20.12 or later.
+if (typeof process.loadEnvFile !== "function") {
+  console.log(`This starter needs Node.js 20.12 or later (you have ${process.version}).`);
+  process.exit(1);
+}
+try {
+  process.loadEnvFile();
+} catch (error) {
+  if (error.code !== "ENOENT") throw error;
+}
+
 const ENVIRONMENTS = { eu: CortiEnvironment.Eu, us: CortiEnvironment.Us };
 
 export function readConfig() {
@@ -31,7 +42,7 @@ export function createClient(config) {
     environment: ENVIRONMENTS[config.environment],
     tenantName: config.tenantName,
     auth: { clientId: config.clientId, clientSecret: config.clientSecret },
-    // Tags every request so Corti can count starter runs. No patient data is sent here.
+    // Tags every API request so Corti can count starter runs. No patient data is sent here.
     analytics: { integration: "scribe-starter", workflow: "ambient-scribe" },
   });
 }

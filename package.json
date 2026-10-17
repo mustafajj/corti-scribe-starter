@@ -1,15 +1,15 @@
 {
   "name": "corti-scribe-starter",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "From an audio file to a structured SOAP note through Corti's APIs, in one command.",
   "type": "module",
   "private": true,
   "engines": {
-    "node": ">=22.9"
+    "node": ">=20.12"
   },
   "scripts": {
-    "check": "node --env-file-if-exists=.env src/check.js",
-    "start": "node --env-file-if-exists=.env src/scribe.js"
+    "check": "node src/check.js",
+    "start": "node src/scribe.js"
   },
   "license": "MIT",
   "dependencies": {
